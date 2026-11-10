@@ -14,13 +14,9 @@
 
 export class User {
     constructor(
-        public id: string,
         public name: string,
         public email: string,
-        public password: string
+        public password_hash: string
     ) {}
 }
-
-
-const user = new User('1', 'John Doe', 'john.doe@example.com', 'securepassword');
 

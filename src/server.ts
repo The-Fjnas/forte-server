@@ -3,7 +3,11 @@ import { registerUserController } from './infra/controllers/register-user-contro
 
 const server = fastify({ logger: true });
 
-server.post('/user', registerUserController);
+// server.post('/user', registerUserController);
+
+server.get('/hello', async (request, reply) => {
+  return{ message: 'Hello, World!' };
+});
 
 const start = async () => {
   try {

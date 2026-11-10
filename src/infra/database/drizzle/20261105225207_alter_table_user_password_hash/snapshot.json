@@ -1,0 +1,69 @@
+{
+  "type": "diff",
+  "version": "9",
+  "dialect": "postgres",
+  "id": "a2d6150e-7f5c-448b-bb62-5c6c81639f02",
+  "prevIds": [
+    "85dd3ac9-00c6-44c9-836f-263a3f02b73e"
+  ],
+  "footprints": [
+    {
+      "statementType": "add_column",
+      "statementTarget": [
+        "column",
+        "public",
+        "users",
+        "password_hash"
+      ],
+      "writes": [
+        "s|col|public.users.password_hash",
+        "n|col|public.users.password_hash",
+        "e|col|public.users.password_hash"
+      ],
+      "reads": [
+        "n|tbl|public.users",
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "drop_column",
+      "statementTarget": [
+        "column",
+        "public",
+        "users",
+        "pasword_hash"
+      ],
+      "writes": [
+        "s|col|public.users.pasword_hash",
+        "n|col|public.users.pasword_hash",
+        "e|col|public.users.pasword_hash"
+      ],
+      "reads": [
+        "n|tbl|public.users",
+        "n|sch|public"
+      ]
+    }
+  ],
+  "deltas": [
+    {
+      "op": "create",
+      "row": {
+        "schema": "public",
+        "table": "users",
+        "name": "password_hash",
+        "type": "varchar(255)",
+        "typeSchema": null,
+        "notNull": true,
+        "dimensions": 0,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "entityType": "columns"
+      }
+    },
+    {
+      "op": "drop",
+      "key": "columns\u0000[\"public\",\"users\",\"pasword_hash\"]"
+    }
+  ]
+}

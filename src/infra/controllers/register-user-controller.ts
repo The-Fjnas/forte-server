@@ -1,5 +1,9 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
+import { RegisterUser } from "../../modules/authentication/use-cases/register-user";
+import { DrizzleUserRepository } from "../database/repositories/drizzle/drizzle-user-repository";
+import { User } from "../../modules/authentication/entities/User";
+import bcrypt from "bcryptjs";
 
 const userSchema = z.object({
     name: z.string().min(3, { message: "Name must be at least 3 characters long" }),
@@ -7,13 +11,22 @@ const userSchema = z.object({
     password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
 });
 
-export function registerUserController(req: FastifyRequest, res: FastifyReply) {
+export async function registerUserController(req: FastifyRequest, res: FastifyReply) {
     try {
         //Primeiro verificamos o que esta entrando no body da requisição
         const userData = userSchema.parse(req.body);
 
-        return res.status(201).send({ message: "User registered successfully", user: userData });
-        //depois chamamos o service que vai fazer a regra de negocio
+        
+        const useCase = new RegisterUser(new DrizzleUserRepository());
+
+        const user = new User(
+            userData.name,
+            userData.email,
+            await bcrypt.hash(userData.password, 10)
+        );
+
+        
+        await useCase.execute(user);
 
     } catch (error) {
         if (error instanceof z.ZodError) {
@@ -42,6 +55,8 @@ export function registerUserController(req: FastifyRequest, res: FastifyReply) {
         
        
         // caso der algum erro, vamos retornar um status code 500 e a mensagem de erro
+
+        console.log(error);
         
         return res.status(500).send({ message: "Internal server error" });
     }
