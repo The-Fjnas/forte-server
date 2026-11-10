@@ -1,5 +1,5 @@
 import fastify from 'fastify';
-import { registerUserController } from './infra/controllers/register-user-controller';
+// import { registerUserController } from './infra/controllers/register-user-controller';
 
 const server = fastify({ logger: true });
 
